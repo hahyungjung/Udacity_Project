@@ -1,0 +1,146 @@
+analysis.txt
+
+
+Step 3 - Calculate Big O
+Once you have completed your solution for each problem, perform a run time analysis (Worst Case Big-O Notation) of your solution. Document this for each problem and include this in your submission.
+
+ ######################## Task0 ########################
+
+def task0(texts, calls):
+
+    print("First record of texts,", texts[0][0], "texts", texts[0][1], "at time", texts[0][2])
+    print("Last record of calls,", calls[len(calls) - 1][0], "calls", calls[len(calls) - 1][1], "at time", calls[len(calls) - 1][2], ", lasting ", calls[len(calls) - 1][3], "seconds")
+
+--- Analysis ---
+O(7) becase the number of outputs are 7
+
+Total : O(1)
+
+######################## Task1 ########################
+
+def task1(texts, calls):
+
+    numbers = []
+
+    for i in range(len(texts)):
+        numbers.append(texts[i][0])
+        numbers.append(texts[i][1])
+
+    for i in range(len(calls)):
+        numbers.append(calls[i][0])
+        numbers.append(calls[i][1])
+
+    result = []
+
+    for value in numbers:
+        if value not in result:
+            result.append(value)
+
+    print("There are", len(result) ,"different telephone numbers in the records.")
+
+
+--- Analysis ---
+O( 3n + 3 ) because creating two variables bring + 2, returing one variable result bring + 1, and three for-loop bring 3n
+
+Total : O(n)
+
+
+######################## Task2 ########################
+
+def task2(texts, calls):
+    max_calls = 0
+    numbers = []
+
+    for i in range(len(calls)):
+        if int(calls[i][3]) > max_calls:
+            max_calls = int(calls[i][3])
+            numbers = [calls[i][0], calls[i][1]]
+
+    print(numbers, " spent the longest time", max_calls, "seconds, on the phone during September 2016.")
+
+--- Analysis ---
+O ( n + 4 ) because creating two variables bring + 2, returing two variables bring + 2, one for-loop bring n.
+
+Total : O(n)
+
+######################## Task3 ########################
+
+def task3(texts, calls):
+
+    # part A
+    
+    calledNumber = []
+    for i in range(len(calls)):
+        if calls[i][0][0:5] == "(080)":
+            if calls[i][1][0] == "7" or calls[i][1][0] == "8" or calls[i][1][0] == "9":
+                calledNumber.append(calls[i][1][0:4])
+            elif calls[i][1][0:3] == "140":
+                calledNumber.append("140")
+            elif calls[i][1][0] == "(":
+                for j in range(len(calls[i][1])):
+                    if calls[i][1][j] == ")":
+                        calledNumber.append(calls[i][1][0:(j+1)])
+
+    print("The numbers called by people in Bangalore have codes:", sorted(calledNumber))
+
+    # part B
+
+    count = 0
+    for i in range(len(calls)):
+        if calls[i][0][0:5] == "(080)" and calls[i][1][0:5] == "(080)":
+            count += 1
+
+    percentInBanga = count / len(calls)
+    print(round(percentInBanga, 2), "percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+
+--- Analysis ---
+
+Part A
+
+O ( n + 2 + n log n ) because one for-loop brings n, creating and returing one vairable bring + 2, and sorting brings n log n.
+
+Total : O (n log n)
+
+Part B 
+
+O ( n + 2 ) because one for-loog brings n, creating and returing two variables brings + 2
+
+Total : O (n)
+
+===> Total : O (n log n)
+
+######################## Task4 ########################
+
+def task4(texts, calls):
+
+    callers = set()
+    called = set()
+    texters = set()
+    texted = set()
+
+    for i in range(len(calls)):
+       callers.add(calls[i][0])
+       called.add(calls[i][1])
+
+    for i in range(len(texts)):
+        texters.add(texts[i][0])
+        texted.add(texts[i][1])
+
+    callers = callers.difference(called)
+    callers = callers.difference(texters)
+    callers = callers.difference(texted)
+    print(len(callers))
+
+    print("These numbers could be telemarketers: ", sorted(callers))
+
+--- Analysis ---
+
+O ( n + 5 + n log n ) because creating four sets and returing one variable brings + 5, one for-loop brings n, and sorting brings n log n
+
+Total : O ( n log n )
+
+
+
+
+
+
