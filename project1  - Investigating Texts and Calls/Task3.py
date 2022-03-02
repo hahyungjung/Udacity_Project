@@ -67,8 +67,7 @@ def task3(texts, calls):
         if i not in res:
             res.append(i)
 
-
-    print("The numbers called by people in Bangalore have codes:", sorted(res))
+    print("The numbers called by people in Bangalore have codes:", *sorted(res), sep="\n")
 
     # part B
 

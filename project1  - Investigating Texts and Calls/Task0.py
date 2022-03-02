@@ -24,3 +24,5 @@ def task0(texts, calls):
 
     print("First record of texts,", texts[0][0], "texts", texts[0][1], "at time", texts[0][2])
     print("Last record of calls,", calls[len(calls) - 1][0], "calls", calls[len(calls) - 1][1], "at time", calls[len(calls) - 1][2], ", lasting ", calls[len(calls) - 1][3], "seconds")
+
+task0(texts, calls)

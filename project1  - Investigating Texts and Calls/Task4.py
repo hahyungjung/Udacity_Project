@@ -44,7 +44,7 @@ def task4(texts, calls):
     callers = callers.difference(texters)
     callers = callers.difference(texted)
 
-    print("These numbers could be telemarketers: ", sorted(callers))
+    print("These numbers could be telemarketers: ", *sorted(callers), sep="\n")
 
 task4(texts, calls)
 

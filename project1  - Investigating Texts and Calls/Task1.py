@@ -41,3 +41,5 @@ def task1(texts, calls):
     print("There are", len(result) ,"different telephone numbers in the records.")
 
     return(result)
+
+task1(texts, calls)
