@@ -48,8 +48,10 @@ The percentage should have 2 decimal digits
 def task3(texts, calls):
 
     # part A
-    
+
     calledNumber = []
+    res = []
+
     for i in range(len(calls)):
         if calls[i][0][0:5] == "(080)":
             if calls[i][1][0] == "7" or calls[i][1][0] == "8" or calls[i][1][0] == "9":
@@ -61,15 +63,34 @@ def task3(texts, calls):
                     if calls[i][1][j] == ")":
                         calledNumber.append(calls[i][1][0:(j+1)])
 
-    print("The numbers called by people in Bangalore have codes:", sorted(calledNumber))
+    for i in calledNumber:
+        if i not in res:
+            res.append(i)
+
+
+    print("The numbers called by people in Bangalore have codes:", sorted(res))
 
     # part B
 
-    count = 0
+
+    called_list = []
+    received_list = []
+    count1 = 0
+    count2 = 0
+
     for i in range(len(calls)):
-        if calls[i][0][0:5] == "(080)" and calls[i][1][0:5] == "(080)":
-            count += 1
+        called_list.append(calls[i][0])
 
-    percentInBanga = count / len(calls)
-    print(round(percentInBanga, 2), "percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+    for i in range(len(calls)):
+        received_list.append(calls[i][1])
 
+    for i in range(len(calls)):
+        if "(080)" in called_list[i][0:5]:
+            count1 += 1
+            if "(080)" in received_list[i][0:5]:
+                count2 += 1
+    percentageBanga = count2 / count1 * 100
+
+    print(round(percentageBanga, 2), "percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+
+task3(texts, calls)

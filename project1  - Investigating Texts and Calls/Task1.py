@@ -19,6 +19,7 @@ Print a message:
 "There are <count> different telephone numbers in the records."
 """
 
+
 def task1(texts, calls):
 
     numbers = []

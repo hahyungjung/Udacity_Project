@@ -43,11 +43,10 @@ def task4(texts, calls):
     callers = callers.difference(called)
     callers = callers.difference(texters)
     callers = callers.difference(texted)
-    print(len(callers))
 
     print("These numbers could be telemarketers: ", sorted(callers))
 
-
+task4(texts, calls)
 
 
 

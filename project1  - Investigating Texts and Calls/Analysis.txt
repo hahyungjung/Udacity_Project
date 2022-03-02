@@ -48,28 +48,78 @@ Total : O(n)
 ######################## Task2 ########################
 
 def task2(texts, calls):
-    max_calls = 0
-    numbers = []
 
-    for i in range(len(calls)):
-        if int(calls[i][3]) > max_calls:
-            max_calls = int(calls[i][3])
-            numbers = [calls[i][0], calls[i][1]]
+    # List of those who made outgoing
+    temp = {}
 
-    print(numbers, " spent the longest time", max_calls, "seconds, on the phone during September 2016.")
+    for i in range(1, len(calls)):
+        if calls[i][0] not in temp.keys():
+            temp[calls[i][0]] = {
+                    "sum": int(calls[i][3])
+                    }
+        else:
+            temp[calls[i][0]]["sum"] += int(calls[i][3])
+
+    out = []
+
+    for key in temp.keys():
+        sum_key = int(temp[key]["sum"])
+        out.append([key, sum_key])
+
+    max_calls_called = 0
+
+    for i in range(len(out)):
+        if out[i][1] > max_calls_called:
+            max_calls_called = out[i][1]
+            numbers_called = calls[i][0]
+
+    # List of those who received calls
+    temp = {}
+
+    for i in range(1, len(calls)):
+        if calls[i][1] not in temp.keys():
+            temp[calls[i][1]] = {
+                    "sum": int(calls[i][3])
+                    }
+        else:
+            temp[calls[i][1]]["sum"] += int(calls[i][3])
+
+    out = []
+
+    for key in temp.keys():
+        sum_key = int(temp[key]["sum"])
+        out.append([key, sum_key])
+
+    max_calls_received = 0
+
+    for i in range(len(out)):
+        if out[i][1] > max_calls_received:
+            max_calls_received = out[i][1]
+            numbers_received = calls[i][0]
+
+    if max_calls_received > max_calls_called:
+        print(numbers_received, "spent the longest time", max_calls_received, "seconds on the phone during September 2016.")
+    else :
+        print(numbers_called, "spent the longest time", max_calls_called, "seconds on the phone during September 2016.")
+
+task2(texts, calls)
+
 
 --- Analysis ---
-O ( n + 4 ) because creating two variables bring + 2, returing two variables bring + 2, one for-loop bring n.
+O ( 6n + 8 ) because creating four variables bring + 6, returing two variables bring + 2, six for-loops bring 6n.
 
 Total : O(n)
 
 ######################## Task3 ########################
 
+
 def task3(texts, calls):
 
     # part A
-    
+
     calledNumber = []
+    res = []
+
     for i in range(len(calls)):
         if calls[i][0][0:5] == "(080)":
             if calls[i][1][0] == "7" or calls[i][1][0] == "8" or calls[i][1][0] == "9":
@@ -81,35 +131,56 @@ def task3(texts, calls):
                     if calls[i][1][j] == ")":
                         calledNumber.append(calls[i][1][0:(j+1)])
 
-    print("The numbers called by people in Bangalore have codes:", sorted(calledNumber))
+    for i in calledNumber:
+        if i not in res:
+            res.append(i)
+
+
+    print("The numbers called by people in Bangalore have codes:", sorted(res))
 
     # part B
 
-    count = 0
-    for i in range(len(calls)):
-        if calls[i][0][0:5] == "(080)" and calls[i][1][0:5] == "(080)":
-            count += 1
 
-    percentInBanga = count / len(calls)
-    print(round(percentInBanga, 2), "percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+    called_list = []
+    received_list = []
+    count1 = 0
+    count2 = 0
+
+    for i in range(len(calls)):
+        called_list.append(calls[i][0])
+
+    for i in range(len(calls)):
+        received_list.append(calls[i][1])
+
+    for i in range(len(calls)):
+        if "(080)" in called_list[i][0:5]:
+            count1 += 1
+            if "(080)" in received_list[i][0:5]:
+                count2 += 1
+    percentageBanga = count2 / count1 * 100  
+
+    print(round(percentageBanga, 2), "percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+
+task3(texts, calls)
 
 --- Analysis ---
 
 Part A
 
-O ( n + 2 + n log n ) because one for-loop brings n, creating and returing one vairable bring + 2, and sorting brings n log n.
+O ( 2n + 2 + n log n ) because two for-loops bring 2n, creating two variables bring + 2, and sorting brings n log n.
 
 Total : O (n log n)
 
 Part B 
 
-O ( n + 2 ) because one for-loog brings n, creating and returing two variables brings + 2
+O ( 3n + 6 ) because three for-loogs bring 3n, creating 5 variables and returing one variable bring + 6 
 
 Total : O (n)
 
 ===> Total : O (n log n)
 
 ######################## Task4 ########################
+
 
 def task4(texts, calls):
 
@@ -129,9 +200,12 @@ def task4(texts, calls):
     callers = callers.difference(called)
     callers = callers.difference(texters)
     callers = callers.difference(texted)
-    print(len(callers))
 
     print("These numbers could be telemarketers: ", sorted(callers))
+
+task4(texts, calls)
+
+
 
 --- Analysis ---
 
